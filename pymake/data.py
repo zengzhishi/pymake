@@ -4,8 +4,8 @@ A representation of makefile data structures.
 
 import logging, re, os, sys
 from functools import reduce
-import parserdata, parser, functions, process, util, implicit
-import globrelative
+from pymake import parserdata, parser, functions, process, util, implicit
+from pymake import globrelative
 from pymake import errors
 
 try:
@@ -1791,7 +1791,9 @@ class Makefile(object):
                 else:
                     stmts = parser.parsefile(fspath)
                 self.variables.append('MAKEFILE_LIST', Variables.SOURCE_AUTOMATIC, path, None, self)
+                print("----" * 10)
                 stmts.execute(self, weak=weak)
+                print("****" * 10)
                 self.gettarget(path).explicit = True
 
     def addvpath(self, pattern, dirs):

@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import logging, re, os
-import data, parser, util
+from pymake import data, parser, util
 from pymake.globrelative import hasglob, glob
 from pymake import errors
 
@@ -894,7 +894,7 @@ class ExportDirective(Statement):
             makefile.exportedvars[v] = True
 
     def dump(self, fd, indent):
-        print("%sExport (single=%s) %s" % (indent, self.single, self.exp), file=fd)
+        print("%sExport %s" % (indent, self.exp), file=fd)
 
     def to_source(self):
         return ('export %s' % self.exp.to_source()).rstrip()

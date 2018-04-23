@@ -34,7 +34,7 @@ coming.
 """
 
 import logging, re, os, sys
-import data, functions, util, parserdata
+from pymake import data, functions, util, parserdata
 from pymake import errors
 
 _log = logging.getLogger('pymake.parser')
@@ -610,7 +610,9 @@ def parsestring(s, filename):
                 value = flattenmakesyntax(d, offset).lstrip()
                 condstack[-1].append(parserdata.SetVariable(e, value=value, valueloc=d.getloc(offset), token=token, targetexp=targets))
             elif token == '|':
+                # TODO: Change order-only prerequisites not implemented SyntaxError to use normal prerequisites.
                 raise errors.SyntaxError('order-only prerequisites not implemented', d.getloc(offset))
+            # TODO: We Need to add FORCE prerequisites tag to avoid pymake regard it as normal-prerequisites.
             else:
                 assert token == ':'
                 # static pattern rule
