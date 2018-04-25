@@ -667,12 +667,12 @@ class Pattern(object):
     def __repr__(self):
         return "<Pattern with data %r>" % (self.data,)
 
-    _backre = re.compile(r'[%\\]')
-    def __str__(self):
-        if not self.ispattern():
-            return self._backre.sub(r'\\\1', self.data[0])
-
-        return self._backre.sub(r'\\\1', self.data[0]) + '%' + self.data[1]
+    # _backre = re.compile(r'[%\\]')
+    # def __str__(self):
+    #     if not self.ispattern():
+    #         return self._backre.sub(r'\\\1', self.data[0])
+    #
+    #     return self._backre.sub(r'\\\1', self.data[0]) + '%' + self.data[1]
 
 class RemakeTargetSerially(object):
     __slots__ = ('target', 'makefile', 'indent', 'rlist')
@@ -1791,9 +1791,8 @@ class Makefile(object):
                 else:
                     stmts = parser.parsefile(fspath)
                 self.variables.append('MAKEFILE_LIST', Variables.SOURCE_AUTOMATIC, path, None, self)
-                print("----" * 10)
+                print("Present analsis Makefile: %s" % os.path.join(self.workdir, path))
                 stmts.execute(self, weak=weak)
-                print("****" * 10)
                 self.gettarget(path).explicit = True
 
     def addvpath(self, pattern, dirs):

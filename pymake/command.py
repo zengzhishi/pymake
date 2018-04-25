@@ -76,7 +76,8 @@ DEALINGS IN THE SOFTWARE.""")
 
 _log = logging.getLogger('pymake.execution')
 
-class _MakeContext(object):
+
+class MakeContext(object):
     def __init__(self, makeflags, makelevel, workdir, context, env, targets, options, ostmts, overrides, cb):
         self.makeflags = makeflags
         self.makelevel = makelevel
@@ -93,6 +94,9 @@ class _MakeContext(object):
         self.restarts = 0
 
         self.remakecb(True)
+
+    def get_makefile(self):
+        return self.makefile
 
     def remakecb(self, remade, error=None):
         if error is not None:
@@ -269,7 +273,8 @@ def main(args, env, cwd, cb):
 
         ostmts, targets, overrides = parserdata.parsecommandlineargs(arguments)
 
-        _MakeContext(makeflags, makelevel, workdir, context, env, targets, options, ostmts, overrides, cb)
+        makeContext = MakeContext(makeflags, makelevel, workdir, context, env, targets, options, ostmts, overrides, cb)
+
     except errors.MakeError as e:
         print(e)
         if options.printdir:
